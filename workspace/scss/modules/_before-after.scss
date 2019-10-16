@@ -1,0 +1,147 @@
+section.before-after {
+    position: relative;
+    display: block;
+    padding: 0 20px;
+    max-width: 1340px;
+    width: 100%;
+    margin: 30px auto;
+    font-size: 1.2em;
+    line-height: 1.5;
+    padding-top: 20px;
+
+    img {
+        max-width: none !important;
+        height: auto;
+        width: 100%;
+    }
+
+    &.disabled-touch {
+        &:after {
+            content: '';
+            position: absolute;
+            z-index: 3;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    }
+
+    .before {
+        max-width: 1000px;
+        width: 100%;
+        height: auto;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        margin: 0 auto;
+
+        .after {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            width: 10px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .hand {
+            position: absolute;
+            display: block;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+
+            &:after {
+                content: '';
+                position: absolute;
+                display: inline-block;
+                width: 2px;
+                height: 100%;
+                background-color: #bbb;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 1;
+            }
+
+            .hand-button {
+                position: absolute;
+                display: inline-block;
+                width: 20px;
+                height: 30px;
+                background-color: lightgray;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                border-radius: 2px;
+                cursor: pointer;
+                box-shadow: 1px 3px 1px rgba($color: black, $alpha: .3);
+
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 8px;
+                    width: 2px;
+                    height: 14px;
+                    background-color: #222;
+                }
+
+                &:before { left: 11px; }
+                &:after { left: 7px; }
+            }
+        }
+    }
+
+    &.loading {
+        &:after,
+        &:before {
+            @include opacity(0);
+            @include transition (opacity .5s ease-in-out);
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            display: inline-block;
+            left: calc(50% - 25px);
+            top: 50%;
+            z-index: 100;
+
+            @include loader($blue, #ccc, .3s, 6px, 50px, 50px);
+            transform: translate(-50%, -50%);
+            background-size: cover;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 99;
+            background-color: white;
+        }
+    }
+
+    &.loading.show {
+        height: 100%;
+        overflow: hidden;
+        
+        &:after,
+        &:before {
+            @include opacity(1);
+        }
+    }
+}
